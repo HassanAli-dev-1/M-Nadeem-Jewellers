@@ -1,5 +1,5 @@
 // ─── M. Nadeem Jewellers— Service Worker v1 (Cache First) ──────────────────
-const CACHE_NAME = 'M. Nadeem Jewellers-v1';
+const CACHE_NAME = 'M. Nadeem Jewellers-v2';
 
 const LOCAL_ASSETS = [
   './index.html',
