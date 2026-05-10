@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#FDFAF4">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="AJ Okara">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="AJLogo.png">
+  <title>Asad Jewellers</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer>
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    :root {
+      --gold-accent: #C8965A;
+      --gold-light: #F7EFE2;
+      --cream-bg: #FDFAF4;
+      --card-bg: #FFFFFF;
+      --text-primary: #1F1A12;
+      --text-secondary: #6B5E4A;
+      --text-muted: #A09888;
+      --border-light: #E8DDD0;
+      --input-bg: #FAF7F2;
+      --green-pay: #2E7D32;
+      --red-pay: #C62828;
+      --reset-red: #C0392B;
+      --share-green: #27AE60;
+    }
+    body {
+      background: var(--cream-bg);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 6px 6px;
+    }
+
+    #splashScreen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 92vh;
+      padding: 24px 20px;
+      text-align: center;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .splash-logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid var(--gold-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--gold-light);
+      margin-bottom: 12px;
+      box-shadow: 0 4px 20px rgba(200, 150, 90, 0.2);
+    }
+    .splash-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .splash-name {
+      font-size: clamp(24px, 6vw, 36px);
+      font-weight: 900;
+      color: var(--gold-accent);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .splash-slogan {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-style: italic;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .splash-specialty {
+      font-size: 10px;
+      color: var(--text-secondary);
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .splash-products {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .splash-phones {
+      font-size: 10px;
+      color: var(--text-primary);
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .splash-addr {
+      font-size: 9px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .splash-enter {
+      background: linear-gradient(135deg, var(--gold-accent) 0%, #D4A96A 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 11px 34px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 12px rgba(200, 150, 90, 0.25);
+    }
+    .splash-enter:active {
+      transform: scale(0.97);
+    }
+    .splash-wm {
+      font-size: 8px;
+      color: var(--text-muted);
+      font-style: italic;
+      opacity: 0.7;
+      line-height: 1.5;
+      position: absolute;
+      bottom: 16px;
+    }
+
+    #mainApp {
+      display: none;
+      width: 100%;
+      max-width: 520px;
+    }
+    .calc-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-light);
+      border-radius: 18px;
+      padding: 8px 8px 6px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    /* ── HEADER ── */
+    .header-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 6px;
+    }
+    .hdr-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-image: url('AJLogo.png');
+      background-size: cover;
+      background-position: center;
+      border: 2px solid var(--gold-accent);
+      flex-shrink: 0;
+    }
+    .hdr-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .hdr-name {
+      font-weight: 900;
+      font-size: 1.20rem;
+      color: var(--gold-accent);
+      line-height: 1.2;
+    }
+    .hdr-addr {
+      font-size: 0.70rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .hdr-contact {
+      font-size: 0.5rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    .hdr-clock {
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      text-align: right;
+      line-height: 1.3;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── ROWS ── */
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .field label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .field label .unit {
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+    .field input {
+      background: var(--input-bg);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 9px 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      outline: none;
+      width: 100%;
+      font-family: inherit;
+    }
+    .field input::placeholder {
+      color: #C0B8AA;
+      font-weight: 400;
+      font-size: 0.75rem;
+    }
+    .field input:focus {
+      border-color: var(--gold-accent);
+      background: white;
+    }
+
+    .gemini-note {
+      font-size: 0.5rem;
+      font-weight: 600;
+      color: var(--gold-accent);
+      min-height: 12px;
+      line-height: 1.2;
+    }
+
+    .tmr-inline {
+      font-size: 0.5rem;
+      color: var(--text-muted);
+      min-height: 12px;
+      line-height: 1.2;
+    }
+
+    /* ── RESULT BOX (display-only) ── */
+    .result-box {
+      background: var(--gold-light);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 9px 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 44px;
+    }
+    .result-box .result-label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 2px;
+    }
+    .result-box .grams-val {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #1F1A12;
+      line-height: 1.3;
+    }
+    .result-box .tmr-val {
+      font-size: 0.5rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+      line-height: 1.2;
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      border: none;
+      border-radius: 8px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      padding: 10px 0;
+    }
+    .btn-share {
+      background: var(--share-green);
+      color: white;
+    }
+    .btn-reset {
+      background: var(--reset-red);
+      color: white;
+    }
+
+    .grand-box {
+      background: var(--gold-light);
+      border: 1px solid var(--gold-accent);
+      border-radius: 8px;
+      padding: 10px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .grand-box .g-label {
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: var(--gold-accent);
+      text-transform: uppercase;
+    }
+    .grand-box .g-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .grand-box .g-value {
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+    .grand-box .g-note {
+      font-size: 0.5rem;
+      font-weight: 700;
+    }
+
+    .app-footer {
+      text-align: center;
+      margin-top: 4px;
+      padding-top: 4px;
+      border-top: 1px solid var(--border-light);
+    }
+    .footer-addr {
+      font-size: 0.5rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+    .footer-wm {
+      font-size: 0.5rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: 8px;
+      opacity: 0.8;
+    }
+    .footer-wm span {
+      font-size: 0.58rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="splashScreen">
+    <div class="splash-logo"><img src="AJLogo.png" alt="AJ"></div>
+    <div class="splash-name">Asad Jewellers Okara</div>
+    <div class="splash-slogan">Wear the Feeling! Live the Moment!</div>
+    <div class="splash-specialty">Daily Wear Sterling Silver | Bespoke Gold Wedding Jewels</div>
+    <div class="splash-products">Bangles | Rings | Earrings | Stones | Chains | Pendant | Payals</div>
+    <div class="splash-phones">0321-7088584 | 0348-4724049 | 0303-5908359</div>
+    <div class="splash-addr">Islam Plaza, Sorri Gali, Dilbaray Wala Chowk, C-Block, Okara.</div>
+    <button class="splash-enter" onclick="enterApp()">Open Calculator</button>
+    <div class="splash-wm">Developed & Maintained by:<br><span style="font-size:10px">The Whitemoon Jeweller</span></div>
+  </div>
+
+  <div id="mainApp">
+    <div class="calc-card">
+
+      <!-- HEADER -->
+      <div class="header-row">
+        <div class="hdr-logo"></div>
+        <div class="hdr-info">
+          <div class="hdr-name">Asad Jewellers Okara</div>
+          <div class="hdr-addr">Islam Plaza, C-Block, Okara</div>
+          <div class="hdr-contact">0321-7088584 | 0348-4724049 | 0303-5908359</div>
+        </div>
+        <div class="hdr-clock" id="liveClock"></div>
+      </div>
+
+      <!-- ROW 1: Rates -->
+      <div class="row-2">
+        <div class="field">
+          <label>Sale Rate <span class="unit">PKR/Tola</span></label>
+          <input type="number" id="saleRate" placeholder="PKR" oninput="handleCalc()" min="0">
+          <div class="gemini-note" id="gSaleNote"></div>
+        </div>
+        <div class="field">
+          <label>Purchase Rate <span class="unit">PKR/Tola</span></label>
+          <input type="number" id="purRate" placeholder="PKR" oninput="handleCalc()" min="0">
+          <div class="gemini-note" id="gPurNote"></div>
+        </div>
+      </div>
+
+      <!-- ROW 2: Customer Payment | Weight from Payment -->
+      <div class="row-2">
+        <div class="field">
+          <label>Customer Payment <span class="unit">PKR</span></label>
+          <input type="number" id="custPay" placeholder="PKR" oninput="handleCalc()" min="0">
+          <div class="gemini-note" id="gPayNote"></div>
+        </div>
+        <div class="result-box" id="payWeightBox">
+          <div class="result-label">Weight from Payment</div>
+          <div class="grams-val">— g</div>
+          <div class="tmr-val">—</div>
+        </div>
+      </div>
+
+      <!-- ROW 3: New Weight | Polish | Total New Weight -->
+      <div class="row-3">
+        <div class="field">
+          <label>New Weight <span class="unit">g</span></label>
+          <input type="number" id="newWt" placeholder="11.6638 g" oninput="handleCalc()" step="0.001" min="0">
+          <div class="tmr-inline" id="newWtTMR"></div>
+        </div>
+        <div class="field">
+          <label>Polish <span class="unit">g</span></label>
+          <input type="number" id="polish" placeholder="g" oninput="handleCalc()" step="0.001" min="0">
+          <div class="tmr-inline" id="polishTMR"></div>
+        </div>
+        <div class="result-box" id="totalNewBox">
+          <div class="result-label">Total New Weight</div>
+          <div class="grams-val">— g</div>
+          <div class="tmr-val">—</div>
+        </div>
+      </div>
+
+      <!-- ROW 4: Old Weight | Kaat | Net Pure Weight -->
+      <div class="row-3">
+        <div class="field">
+          <label>Old Weight <span class="unit">g</span></label>
+          <input type="number" id="oldWt" placeholder="11.6638 g" oninput="handleCalc()" step="0.001" min="0">
+          <div class="tmr-inline" id="oldWtTMR"></div>
+        </div>
+        <div class="field">
+  <label>Kaat <span class="unit">Ratti/Tola</span></label>
+  <input type="number" id="kaat" placeholder="Ratti/Tola" oninput="handleCalc()" step="0.001" min="0">
+  <div class="tmr-inline" id="kaatTMR"></div>
+  <div class="gemini-note" id="kaatGrams" style="color:#A09888;"></div>
+</div>
+        <div class="result-box" id="netPureBox">
+          <div class="result-label">Net Pure Weight</div>
+          <div class="grams-val">— g</div>
+          <div class="tmr-val">—</div>
+        </div>
+      </div>
+
+      <!-- ROW 5: Labour | Share/Save | Reset -->
+<div class="row-3">
+  <div class="field">
+    <label>Labour <span class="unit">PKR</span></label>
+    <input type="number" id="labour" placeholder="PKR" oninput="handleCalc()" min="0">
+    <div class="gemini-note" id="gLabNote"></div>
+  </div>
+  <button class="btn btn-share" onclick="captureAndShare()">Share / Save</button>
+  <button class="btn btn-reset" onclick="resetAll()">Reset</button>
+</div>
+
+     <!-- ROW 6: Grand Total (full width) -->
+<div class="grand-box" style="margin-bottom:6px;">
+  <span class="g-label">Total</span>
+  <div class="g-right">
+    <span class="g-value" id="grandValue">0 PKR</span>
+    <span class="g-note" id="payNote"></span>
+  </div>
+</div>
+
+        <button class="btn btn-reset" onclick="resetAll()">Reset</button>
+      </div>
+
+      <div class="app-footer">
+        <div class="footer-addr">Islam Plaza, Sorrigali, near Dilbaray Wala Chowk, C-Block, Okara</div>
+        <div class="footer-wm">Powered by<br><span>The Whitemoon Jeweller</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const TOLA = 11.6638;
+      const STORAGE_KEY = 'asad_jewellers_data';
+
+      function v(id) { return parseFloat(document.getElementById(id).value) || 0; }
+      function r3(n) { return Math.round(n * 1000) / 1000; }
+
+      function fmtPKR(n) {
+        const num = Math.abs(Math.round(n));
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+
+      function toTMR(grams) {
+        if (!grams || grams <= 0) return { tola: 0, masha: 0, ratti: 0 };
+        const totalR = (grams / TOLA) * 96;
+        const tola = Math.floor(totalR / 96);
+        const rem = totalR - tola * 96;
+        const masha = Math.floor(rem / 8);
+        const ratti = Math.round((rem - masha * 8) * 100) / 100;
+        return { tola, masha, ratti };
+      }
+
+      function tmrStr(g) {
+        const t = toTMR(g);
+        return '<strong style="color:#1F1A12;font-weight:700;">' + t.tola + '</strong> <span style="color:#A09888;">T</span>  <strong style="color:#1F1A12;font-weight:700;">' + t.masha + '</strong> <span style="color:#A09888;">M</span>  <strong style="color:#1F1A12;font-weight:700;">' + t.ratti + '</strong> <span style="color:#A09888;">R</span>';
+      }
+
+      function updateClock() {
+        const now = new Date();
+        const opts = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' };
+        document.getElementById('liveClock').innerHTML = now.toLocaleDateString('en-GB', opts) + '<br>' + now.toLocaleTimeString(
+          'en-GB', { hour12: false });
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      function loadData() {
+        try {
+          const d = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if (d) {
+            if (d.sale) document.getElementById('saleRate').value = d.sale;
+            if (d.pur) document.getElementById('purRate').value = d.pur;
+          }
+        } catch (e) {}
+      }
+
+      function saveData() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            sale: document.getElementById('saleRate').value,
+            pur: document.getElementById('purRate').value
+          }));
+        } catch (e) {}
+      }
+
+      function handleCalc() {
+        saveData();
+        const sRate = v('saleRate');
+        const pRate = v('purRate');
+        const custPayAmt = v('custPay');
+        const newWt = v('newWt');
+        const polGrams = v('polish');
+        const oldWt = v('oldWt');
+        const kaatPerTola = v('kaat');
+        const lab = v('labour');
+
+        document.getElementById('gSaleNote').textContent = sRate > 0 ? 'PKR ' + fmtPKR(sRate) : '';
+        document.getElementById('gPurNote').textContent = pRate > 0 ? 'PKR ' + fmtPKR(pRate) : '';
+        document.getElementById('gPayNote').textContent = custPayAmt > 0 ? 'PKR ' + fmtPKR(custPayAmt) : '';
+        document.getElementById('gLabNote').textContent = lab > 0 ? 'PKR ' + fmtPKR(lab) : '';
+
+        const payBox = document.getElementById('payWeightBox');
+        if (custPayAmt > 0 && sRate > 0) {
+          const payWt = r3((custPayAmt / sRate) * TOLA);
+          payBox.querySelector('.grams-val').innerHTML = '<strong style="color:#1F1A12;font-weight:800;">' + payWt +
+            '</strong> g';
+          payBox.querySelector('.tmr-val').innerHTML = tmrStr(payWt);
+        } else {
+          payBox.querySelector('.grams-val').textContent = '— g';
+          payBox.querySelector('.tmr-val').textContent = '—';
+        }
+
+        document.getElementById('newWtTMR').innerHTML = newWt > 0 ? tmrStr(newWt) : '';
+        document.getElementById('polishTMR').innerHTML = polGrams > 0 ? tmrStr(polGrams) : '';
+        const totalNew = newWt > 0 ? r3(newWt + polGrams) : 0;
+        const tnBox = document.getElementById('totalNewBox');
+        if (newWt > 0) {
+          tnBox.querySelector('.grams-val').innerHTML = '<strong style="color:#1F1A12;font-weight:800;">' + totalNew +
+            '</strong> g';
+          tnBox.querySelector('.tmr-val').innerHTML = tmrStr(totalNew);
+        } else {
+          tnBox.querySelector('.grams-val').textContent = '— g';
+          tnBox.querySelector('.tmr-val').textContent = '—';
+        }
+
+        document.getElementById('oldWtTMR').innerHTML = oldWt > 0 ? tmrStr(oldWt) : '';
+        let kaatGrams = 0;
+        if (oldWt > 0 && kaatPerTola > 0) {
+  kaatGrams = r3((kaatPerTola / 96) * oldWt);
+  document.getElementById('kaatTMR').innerHTML = tmrStr(kaatGrams);
+  document.getElementById('kaatGrams').innerHTML = '<span style="color:#C0B8AA;">|</span> ' + kaatGrams + ' g';
+} else {
+  document.getElementById('kaatTMR').innerHTML = '';
+  document.getElementById('kaatGrams').textContent = '';
+}
+
+        const netPure = oldWt > 0 ? r3(Math.max(0, oldWt - kaatGrams)) : 0;
+        const npBox = document.getElementById('netPureBox');
+        if (oldWt > 0) {
+          npBox.querySelector('.grams-val').innerHTML = '<strong style="color:#1F1A12;font-weight:800;">' + netPure +
+            '</strong> g';
+          npBox.querySelector('.tmr-val').innerHTML = tmrStr(netPure);
+        } else {
+          npBox.querySelector('.grams-val').textContent = '— g';
+          npBox.querySelector('.tmr-val').textContent = '—';
+        }
+
+        let saleVal = 0,
+          polVal = 0,
+          purVal = 0;
+        if (newWt > 0 && sRate > 0) {
+          saleVal = Math.round((newWt / TOLA) * sRate);
+          if (polGrams > 0) polVal = Math.round((polGrams / TOLA) * sRate);
+        }
+        if (netPure > 0 && pRate > 0) purVal = Math.round((netPure / TOLA) * pRate);
+        const grand = saleVal + polVal - purVal + lab;
+
+        const gv = document.getElementById('grandValue');
+        gv.textContent = fmtPKR(grand) + ' PKR';
+        const pn = document.getElementById('payNote');
+        if (sRate > 0 || pRate > 0) {
+          if (grand >= 0) {
+            pn.textContent = 'Customer Pays';
+            pn.style.color = '#2E7D32';
+            gv.style.color = '#2E7D32';
+          } else {
+            pn.textContent = 'Shop Pays';
+            pn.style.color = '#C62828';
+            gv.style.color = '#C62828';
+          }
+        } else {
+          pn.textContent = '';
+          gv.style.color = '#1F1A12';
+        }
+      }
+
+      window.handleCalc = handleCalc;
+
+      window.resetAll = function() {
+        ['custPay', 'newWt', 'polish', 'oldWt', 'kaat', 'labour'].forEach(function(id) {
+          document.getElementById(id).value = '';
+        });
+        handleCalc();
+      };
+
+      window.enterApp = function() {
+        document.getElementById('splashScreen').style.display = 'none';
+        document.getElementById('mainApp').style.display = 'block';
+        handleCalc();
+      };
+
+      window.captureAndShare = async function() {
+        const btn = document.querySelector('.btn-share');
+        const orig = btn.textContent;
+        btn.textContent = 'Wait...';
+        btn.disabled = true;
+        try {
+          const canvas = await html2canvas(document.querySelector('.calc-card'), {
+            scale: 2.5,
+            backgroundColor: '#FDFAF4',
+            allowTaint: true,
+            useCORS: true,
+            logging: false
+          });
+          const blob = await new Promise(function(r) { canvas.toBlob(r, 'image/png'); });
+          const file = new File([blob], 'AsadJewellers_Receipt.png', { type: 'image/png' });
+          if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({ title: 'Asad Jewellers Receipt', files: [file] });
+          } else {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'AsadJewellers_Receipt.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(function() { URL.revokeObjectURL(url); }, 5000);
+          }
+        } catch (e) {
+          if (e.name !== 'AbortError') {
+            const canvas2 = await html2canvas(document.querySelector('.calc-card'), {
+              scale: 2.5,
+              backgroundColor: '#FDFAF4',
+              allowTaint: true,
+              useCORS: true,
+              logging: false
+            });
+            const blob2 = await new Promise(function(r) { canvas2.toBlob(r, 'image/png'); });
+            const url2 = URL.createObjectURL(blob2);
+            const a2 = document.createElement('a');
+            a2.href = url2;
+            a2.download = 'AsadJewellers_Receipt.png';
+            document.body.appendChild(a2);
+            a2.click();
+            document.body.removeChild(a2);
+            setTimeout(function() { URL.revokeObjectURL(url2); }, 5000);
+          }
+        } finally {
+          btn.textContent = orig;
+          btn.disabled = false;
+        }
+      };
+
+      loadData();
+      handleCalc();
+
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('sw.js').catch(function() {});
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
