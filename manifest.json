@@ -1,7 +1,7 @@
 {
-  "name": "Asad Jewellers",
-  "short_name": "AJ Okara",
-  "description": "Metal weight calculator for Asad Jewellers Okara",
+  "name": "M. Nadeem Jewellers",
+  "short_name": "MNJ Okara",
+  "description": "Metal weight calculator for M. Nadeem Jewellers",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
@@ -9,12 +9,12 @@
   "theme_color": "#c8943a",
   "icons": [
     {
-      "src": "AJLogo.png",
+      "src": "Logo.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "AJLogo.png",
+      "src": "Logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }

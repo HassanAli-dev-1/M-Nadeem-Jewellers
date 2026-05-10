@@ -1,10 +1,10 @@
-// ─── Asad Jewellers — Service Worker v1 (Cache First) ──────────────────
-const CACHE_NAME = 'asad-jewellers-v4';
+// ─── M. Nadeem Jewellers— Service Worker v1 (Cache First) ──────────────────
+const CACHE_NAME = 'M. Nadeem Jewellers-v1';
 
 const LOCAL_ASSETS = [
   './index.html',
   './manifest.json',
-  './AJLogo.png'
+  './Logo.png'
 ];
 
 const CDN_ASSETS = [
